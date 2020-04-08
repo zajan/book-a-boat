@@ -42,10 +42,6 @@ public class Boat {
     @OneToMany(mappedBy = "boat")
     private Set<Photo> photos;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "profile_photo_id")
-    private Photo profilePhoto;
-
     public Boat() {
     }
 
@@ -61,7 +57,6 @@ public class Boat {
         this.year = year;
         this.length = length;
         this.photos = photos;
-        this.profilePhoto = profilePhoto;
     }
 
     public long getId() {
@@ -152,14 +147,6 @@ public class Boat {
         this.photos = photos;
     }
 
-    public Photo getProfilePhoto() {
-        return profilePhoto;
-    }
-
-    public void setProfilePhoto(Photo profilePhoto) {
-        this.profilePhoto = profilePhoto;
-    }
-
     @Override
     public String toString() {
         return "Boat{" +
@@ -174,7 +161,6 @@ public class Boat {
                 ", year=" + year +
                 ", length=" + length +
                 ", photos=" + photos +
-                ", profilePhoto=" + profilePhoto +
                 '}';
     }
 }

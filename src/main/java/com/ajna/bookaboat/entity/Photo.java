@@ -18,14 +18,18 @@ public class Photo {
     @JoinColumn(name = "boat")
     private Boat boat;
 
+    @Column(name = "is_default")
+    private boolean isDefault;
+
 
     public Photo() {
     }
 
-    public Photo(int id, String url, Boat boat) {
+    public Photo(int id, String url, Boat boat, boolean isDefault) {
         this.id = id;
         this.url = url;
         this.boat = boat;
+        this.isDefault = isDefault;
     }
 
     public int getId() {
@@ -52,12 +56,21 @@ public class Photo {
         this.boat = boat;
     }
 
+    public boolean isDefault() {
+        return isDefault;
+    }
+
+    public void setDefault(boolean aDefault) {
+        isDefault = aDefault;
+    }
+
     @Override
     public String toString() {
         return "Photo{" +
                 "id=" + id +
                 ", url='" + url + '\'' +
                 ", boat=" + boat +
+                ", isDefault=" + isDefault +
                 '}';
     }
 }
