@@ -11,12 +11,12 @@ public class Photo {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @Column(name = "url")
-    private String url;
+    @Column(name = "name")
+    private String name;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "boat")
-    private Boat boat;
+
+    @Column(name = "boat_id")
+    private int boatId;
 
     @Column(name = "is_default")
     private boolean isDefault;
@@ -25,10 +25,16 @@ public class Photo {
     public Photo() {
     }
 
-    public Photo(int id, String url, Boat boat, boolean isDefault) {
+    public Photo(String name, int boatId, boolean isDefault) {
+        this.name = name;
+        this.boatId = boatId;
+        this.isDefault = isDefault;
+    }
+
+    public Photo(int id, String name, int boatId, boolean isDefault) {
         this.id = id;
-        this.url = url;
-        this.boat = boat;
+        this.name = name;
+        this.boatId = boatId;
         this.isDefault = isDefault;
     }
 
@@ -40,20 +46,20 @@ public class Photo {
         this.id = id;
     }
 
-    public String getUrl() {
-        return url;
+    public String getName() {
+        return name;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public Boat getBoat() {
-        return boat;
+    public int getBoatId() {
+        return boatId;
     }
 
-    public void setBoat(Boat boat) {
-        this.boat = boat;
+    public void setBoatId(int boatId) {
+        this.boatId = boatId;
     }
 
     public boolean isDefault() {
@@ -68,8 +74,8 @@ public class Photo {
     public String toString() {
         return "Photo{" +
                 "id=" + id +
-                ", url='" + url + '\'' +
-                ", boat=" + boat +
+                ", name='" + name + '\'' +
+                ", boatId=" + boatId +
                 ", isDefault=" + isDefault +
                 '}';
     }

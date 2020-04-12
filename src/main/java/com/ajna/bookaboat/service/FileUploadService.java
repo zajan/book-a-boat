@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
@@ -27,6 +28,7 @@ public class FileUploadService {
     private String location;
 
 
+    @PostConstruct
     public void init() {
         System.out.println("Location: " + location);
         this.locationPath = Paths.get(location);
@@ -94,8 +96,14 @@ public class FileUploadService {
         }
     }
 
+    public void delete(String filename){
+        String fileLocation = location + filename;
+        Path filePath = Paths.get(fileLocation);
+        FileSystemUtils.deleteRecursively(filePath.toFile());
+    }
+
     public void deleteAll() {
         FileSystemUtils.deleteRecursively(locationPath.toFile());
     }
-    
+
 }

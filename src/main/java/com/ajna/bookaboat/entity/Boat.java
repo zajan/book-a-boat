@@ -39,7 +39,8 @@ public class Boat {
     @Column(name = "length")
     private int length;
 
-    @OneToMany(mappedBy = "boat")
+    @OneToMany
+    @JoinColumn(name = "boat_id")
     private Set<Photo> photos;
 
     public Boat() {
@@ -59,7 +60,7 @@ public class Boat {
         this.photos = photos;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
