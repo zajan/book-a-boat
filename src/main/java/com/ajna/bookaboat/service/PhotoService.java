@@ -38,6 +38,24 @@ public class PhotoService {
         return photo;
     }
 
+    public Photo findByName(String name){
+        Photo photo = null;
+        Optional<Photo> optPhoto = photoRepository.findByName(name);
+        if(optPhoto.isPresent()){
+            photo = optPhoto.get();
+        }
+        return photo;
+    }
+
+    public Photo findDefaultForBoat(int boatId){
+        Photo photo = null;
+        Optional<Photo> optPhoto = photoRepository.findByBoatIdAndIsDefault(boatId, true);
+        if(optPhoto.isPresent()){
+            photo = optPhoto.get();
+        }
+        return photo;
+    }
+
 
     public void save(Photo photo){
         photoRepository.save(photo);

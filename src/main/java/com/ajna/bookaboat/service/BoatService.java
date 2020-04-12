@@ -2,12 +2,16 @@ package com.ajna.bookaboat.service;
 
 import com.ajna.bookaboat.entity.Boat;
 import com.ajna.bookaboat.entity.Photo;
+import com.ajna.bookaboat.exception.PhotoNotFoundException;
 import com.ajna.bookaboat.respository.BoatRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,6 +50,11 @@ public class BoatService {
         return boat;
     }
 
+    public ResponseEntity<Resource> getDefaultPhotoFile(int id, HttpServletRequest request){
+        Photo photo = photoService.findDefaultForBoat(id);
+        return photoService.getPhotoFileByName(photo.getName(), request);
+    }
+
     public void save(Boat boat) {
         boatRepository.save(boat);
     }
@@ -74,6 +83,20 @@ public class BoatService {
 
         String imageName = fileUploadService.store(photoFile);
         Photo photo = new Photo(imageName, boatId, isDefault);
+        photoService.save(photo);
+    }
+
+    public void setPhotoAsDefault(int boatId, String photoName){
+        Photo oldDefaultPhoto = photoService.findDefaultForBoat(boatId);
+        if(oldDefaultPhoto != null){
+            oldDefaultPhoto.setDefault(false);
+        }
+
+        Photo photo = photoService.findByName(photoName);
+        if(photo == null){
+            throw new PhotoNotFoundException("Couldn't find photo with name: " + photoName);
+        }
+        photo.setDefault(true);
         photoService.save(photo);
     }
 

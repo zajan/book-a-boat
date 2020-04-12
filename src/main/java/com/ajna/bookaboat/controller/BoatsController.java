@@ -2,6 +2,7 @@ package com.ajna.bookaboat.controller;
 
 import com.ajna.bookaboat.entity.Boat;
 import com.ajna.bookaboat.entity.BoatType;
+import com.ajna.bookaboat.entity.Photo;
 import com.ajna.bookaboat.service.BoatService;
 import com.ajna.bookaboat.service.BoatTypeService;
 import com.ajna.bookaboat.service.PhotoService;
@@ -48,6 +49,17 @@ public class BoatsController {
     public String addPhotos(@PathVariable int id, @RequestPart MultipartFile[] photos){
         boatService.addPhotos(id, photos);
         return "Added photos";
+    }
+
+    @GetMapping("/boats/{id}/default-photo")
+    public ResponseEntity<Resource> getDefaultPhoto(@PathVariable int id, HttpServletRequest request){
+        return boatService.getDefaultPhotoFile(id, request);
+    }
+
+    @PostMapping("/boats/{id}/default-photo/{image_name}")
+    public String setDefaultPhoto(@PathVariable int id,@PathVariable String image_name){
+        boatService.setPhotoAsDefault(id, image_name);
+        return "Default photo is set";
     }
 
     @DeleteMapping("/photos/{name}")
