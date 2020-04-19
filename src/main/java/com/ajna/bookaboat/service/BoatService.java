@@ -2,7 +2,6 @@ package com.ajna.bookaboat.service;
 
 import com.ajna.bookaboat.entity.Boat;
 import com.ajna.bookaboat.entity.Photo;
-import com.ajna.bookaboat.exception.PhotoNotFoundException;
 import com.ajna.bookaboat.respository.BoatRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -32,52 +31,53 @@ public class BoatService {
         return boatRepository.findAll();
     }
 
+
     public Boat findById(int id) {
-        Boat boat = null;
         Optional<Boat> optBoat = boatRepository.findById(id);
-        if (optBoat.isPresent()) {
-            boat = optBoat.get();
+
+        if (!optBoat.isPresent()) {
+            throw new EntityNotFoundException("Couldn't find boat with id: " + id);
         }
-        return boat;
+        return optBoat.get();
     }
 
     public Boat findByName(String name) {
-        Boat boat = null;
         Optional<Boat> optBoat = boatRepository.findByName(name);
-        if (optBoat.isPresent()) {
-            boat = optBoat.get();
+
+        if (!optBoat.isPresent()) {
+            throw new EntityNotFoundException("Couldn't find boat with name: " + name);
         }
-        return boat;
+        return optBoat.get();
     }
 
-    public ResponseEntity<Resource> getDefaultPhotoFile(int id, HttpServletRequest request){
+    public ResponseEntity<Resource> getDefaultPhotoFile(int id, HttpServletRequest request) {
         Photo photo = photoService.findDefaultForBoat(id);
+
         return photoService.getPhotoFileByName(photo.getName(), request);
     }
 
-    public void save(Boat boat) {
-        boatRepository.save(boat);
+    public Boat save(Boat boat) {
+
+        return boatRepository.save(boat);
     }
 
-    public void save(Boat boat, MultipartFile[] photos) {
+    public Boat save(Boat boat, MultipartFile[] photos) {
 
-        boatRepository.save(boat);
-        String boatName = boat.getName();
-        Boat savedBoat = boatRepository.findByName(boatName).get();
-        int boatId = savedBoat.getId();
+        Boat savedBoat =  boatRepository.save(boat);
+        addPhotos(savedBoat.getId(), photos);
 
-        addPhotos(boatId, photos);
+        return savedBoat;
     }
 
-    public void addPhotos(int boatId, MultipartFile[] photos){
-        for(MultipartFile photo : photos){
+    public void addPhotos(int boatId, MultipartFile[] photos) {
+        for (MultipartFile photo : photos) {
             addPhoto(boatId, photo, false);
         }
     }
 
-    public void addPhoto(int boatId, MultipartFile photoFile, boolean isDefault){
+    public void addPhoto(int boatId, MultipartFile photoFile, boolean isDefault) {
 
-        if(findById(boatId) == null) {
+        if (findById(boatId) == null) {
             throw new EntityNotFoundException("Boat with given id not found.");
         }
 
@@ -86,15 +86,15 @@ public class BoatService {
         photoService.save(photo);
     }
 
-    public void setPhotoAsDefault(int boatId, String photoName){
+    public void setPhotoAsDefault(int boatId, String photoName) {
         Photo oldDefaultPhoto = photoService.findDefaultForBoat(boatId);
-        if(oldDefaultPhoto != null){
+        if (oldDefaultPhoto != null) {
             oldDefaultPhoto.setDefault(false);
         }
 
         Photo photo = photoService.findByName(photoName);
-        if(photo == null){
-            throw new PhotoNotFoundException("Couldn't find photo with name: " + photoName);
+        if (photo == null) {
+            throw new EntityNotFoundException("Couldn't find photo with name: " + photoName);
         }
         photo.setDefault(true);
         photoService.save(photo);

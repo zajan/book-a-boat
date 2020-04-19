@@ -6,6 +6,7 @@ import com.ajna.bookaboat.respository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,20 +21,22 @@ public class UserService{
     }
 
     public User findById(int id){
-        User user = null;
         Optional<User> optUser = userRepository.findById(id);
-        if(optUser.isPresent()){
-            user = optUser.get();
+
+        if(!optUser.isPresent()){
+            throw new EntityNotFoundException("Couldn't find user with id: " + id);
         }
-        return user;
+
+        return optUser.get();
     }
     public User findByUsername(String username){
-        User user = null;
         Optional<User> optUser = userRepository.findByUsername(username);
-        if(optUser.isPresent()){
-            user = optUser.get();
+
+        if(!optUser.isPresent()){
+            throw new EntityNotFoundException("Couldn't find user with username: " + username);
         }
-        return user;
+
+        return optUser.get();
     }
 
 

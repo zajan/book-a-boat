@@ -6,6 +6,7 @@ import com.ajna.bookaboat.respository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,21 +20,19 @@ public class RoleService {
     }
 
     public Role findById(int id){
-        Role role = null;
         Optional<Role> optRole = roleRepository.findById(id);
-        if(optRole.isPresent()){
-            role = optRole.get();
+        if(!optRole.isPresent()){
+            throw new EntityNotFoundException("Couldn't find role with id: " + id);
         }
-        return role;
+        return optRole.get();
     }
 
     public Role findByName(String name){
-        Role role = null;
         Optional<Role> optRole = roleRepository.findByName(name);
-        if(optRole.isPresent()){
-            role = optRole.get();
+        if(!optRole.isPresent()){
+            throw new EntityNotFoundException("Couldn't find role with name: " + name);
         }
-        return role;
+        return optRole.get();
     }
 
     public void save(Role role){

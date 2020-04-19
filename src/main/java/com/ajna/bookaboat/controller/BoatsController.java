@@ -2,20 +2,27 @@ package com.ajna.bookaboat.controller;
 
 import com.ajna.bookaboat.entity.Boat;
 import com.ajna.bookaboat.entity.BoatType;
-import com.ajna.bookaboat.entity.Photo;
+import com.ajna.bookaboat.exception.DummyException;
 import com.ajna.bookaboat.service.BoatService;
 import com.ajna.bookaboat.service.BoatTypeService;
 import com.ajna.bookaboat.service.PhotoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
+import org.springframework.dao.support.DataAccessUtils;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @RestController
+@CrossOrigin(exposedHeaders = "errors, content-type")
 public class BoatsController {
 
     @Autowired
@@ -34,20 +41,20 @@ public class BoatsController {
 
     @GetMapping("/boats/{id}")
     public Boat getBoatById(@PathVariable int id){
-        return boatService.findById(id);
+        return  boatService.findById(id);
     }
 
 
     @PostMapping("/boats")
-    public String save(@RequestPart Boat boat, @RequestPart MultipartFile[] photos){
-        boatService.save(boat, photos);
-        return "Added boat";
+    public Boat save(@RequestPart @Valid Boat boat, @RequestPart MultipartFile[] photos){
+
+        return boatService.save(boat, photos);
     }
 
 
-    @PostMapping("/boats/{id}/photos")
-    public String addPhotos(@PathVariable int id, @RequestPart MultipartFile[] photos){
-        boatService.addPhotos(id, photos);
+    @PostMapping("/boats/{boat_id}/photos")
+    public String addPhotos(@PathVariable int boat_id, @RequestPart MultipartFile[] photos){
+        boatService.addPhotos(boat_id, photos);
         return "Added photos";
     }
 

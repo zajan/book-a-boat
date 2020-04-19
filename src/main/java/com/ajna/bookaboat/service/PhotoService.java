@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
@@ -30,30 +31,31 @@ public class PhotoService {
     }
 
     public Photo findById(int id){
-        Photo photo = null;
         Optional<Photo> optPhoto = photoRepository.findById(id);
-        if(optPhoto.isPresent()){
-            photo = optPhoto.get();
+        if(!optPhoto.isPresent()){
+            throw new EntityNotFoundException("Couldn't find photo with id: " + id);
+
         }
-        return photo;
+        return optPhoto.get();
     }
 
     public Photo findByName(String name){
-        Photo photo = null;
         Optional<Photo> optPhoto = photoRepository.findByName(name);
-        if(optPhoto.isPresent()){
-            photo = optPhoto.get();
+        if(!optPhoto.isPresent()){
+            throw new EntityNotFoundException("Couldn't find photo with name: " + name);
+
         }
-        return photo;
+        return optPhoto.get();
     }
 
     public Photo findDefaultForBoat(int boatId){
-        Photo photo = null;
         Optional<Photo> optPhoto = photoRepository.findByBoatIdAndIsDefault(boatId, true);
-        if(optPhoto.isPresent()){
-            photo = optPhoto.get();
+
+        if(!optPhoto.isPresent()){
+            throw new EntityNotFoundException("Couldn't find default photo for boat with id: " + boatId +
+                    ". This boat may have no default photo.");
         }
-        return photo;
+        return optPhoto.get();
     }
 
 
@@ -64,6 +66,7 @@ public class PhotoService {
     public void deleteById(int id){
         photoRepository.deleteById(id);
     }
+
     public void deleteByName(String name){
         photoRepository.deleteByName(name);
         fileUploadService.delete(name);

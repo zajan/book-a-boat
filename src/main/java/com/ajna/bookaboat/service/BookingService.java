@@ -6,6 +6,7 @@ import com.ajna.bookaboat.respository.BookingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,12 +22,11 @@ public class BookingService {
     }
 
     public Booking findById(int id) {
-        Booking booking = null;
         Optional<Booking> optBooking = bookingRepository.findById(id);
-        if (optBooking.isPresent()) {
-            booking = optBooking.get();
+        if (!optBooking.isPresent()) {
+            throw new EntityNotFoundException("Couldn't find booking with id: " + id);
         }
-        return booking;
+        return optBooking.get();
     }
 
     public void save(Booking booking) {

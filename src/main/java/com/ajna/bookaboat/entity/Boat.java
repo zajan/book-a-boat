@@ -1,6 +1,8 @@
 package com.ajna.bookaboat.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.Set;
 
 @Entity
@@ -12,6 +14,7 @@ public class Boat {
     private int id;
 
     @Column(name = "name")
+    @NotEmpty
     private String name;
 
     @Column(name = "description")
@@ -19,11 +22,13 @@ public class Boat {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "boat_type_id")
+    @NotNull
     private BoatType boatType;
 
     @Column(name = "people")
     private int people;
 
+    @NotNull
     @Column(name = "price")
     private int price;
 
