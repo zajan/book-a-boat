@@ -5,12 +5,14 @@ import com.ajna.bookaboat.entity.Photo;
 import com.ajna.bookaboat.respository.BoatRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,6 +31,10 @@ public class BoatService {
 
     public List<Boat> findAll() {
         return boatRepository.findAll();
+    }
+
+    public Iterable<Boat> findForPage(Pageable pageable){
+        return boatRepository.findAll(pageable);
     }
 
 

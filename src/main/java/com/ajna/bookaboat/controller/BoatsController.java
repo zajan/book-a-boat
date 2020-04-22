@@ -9,6 +9,7 @@ import com.ajna.bookaboat.service.PhotoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.dao.support.DataAccessUtils;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -19,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 @RestController
@@ -35,8 +37,13 @@ public class BoatsController {
     PhotoService photoService;
 
     @GetMapping("/boats")
-    public List<Boat> getBoats(){
+    public List<Boat> getAllBoats(){
         return boatService.findAll();
+    }
+
+    @GetMapping(value = "/boats", params = {"page", "number"})
+    public Iterable<Boat> getBoats(@RequestParam int page, @RequestParam int number){
+        return boatService.findForPage(PageRequest.of(page, number));
     }
 
     @GetMapping("/boats/{id}")
