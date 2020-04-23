@@ -1,5 +1,6 @@
 package com.ajna.bookaboat.service;
 
+import com.ajna.bookaboat.dto.BoatFilter;
 import com.ajna.bookaboat.entity.Boat;
 import com.ajna.bookaboat.entity.Photo;
 import com.ajna.bookaboat.respository.BoatRepository;
@@ -12,8 +13,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletRequest;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -28,13 +27,8 @@ public class BoatService {
     @Autowired
     PhotoService photoService;
 
-
-    public List<Boat> findAll() {
-        return boatRepository.findAll();
-    }
-
-    public Iterable<Boat> findForPage(Pageable pageable){
-        return boatRepository.findAll(pageable);
+    public Iterable<Boat> findAll(BoatFilter boatFilter, Pageable pageable){
+        return boatRepository.findAll(boatFilter, pageable);
     }
 
 

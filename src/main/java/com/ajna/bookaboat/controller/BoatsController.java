@@ -1,26 +1,20 @@
 package com.ajna.bookaboat.controller;
 
+import com.ajna.bookaboat.dto.BoatFilter;
 import com.ajna.bookaboat.entity.Boat;
 import com.ajna.bookaboat.entity.BoatType;
-import com.ajna.bookaboat.exception.DummyException;
 import com.ajna.bookaboat.service.BoatService;
 import com.ajna.bookaboat.service.BoatTypeService;
 import com.ajna.bookaboat.service.PhotoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
-import org.springframework.dao.support.DataAccessUtils;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.http.HttpStatus;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 @RestController
@@ -37,13 +31,8 @@ public class BoatsController {
     PhotoService photoService;
 
     @GetMapping("/boats")
-    public List<Boat> getAllBoats(){
-        return boatService.findAll();
-    }
-
-    @GetMapping(value = "/boats", params = {"page", "number"})
-    public Iterable<Boat> getBoats(@RequestParam int page, @RequestParam int number){
-        return boatService.findForPage(PageRequest.of(page, number));
+    public Iterable<Boat> getAllBoats(BoatFilter boatFilter, Pageable pageable){
+        return boatService.findAll(boatFilter, pageable);
     }
 
     @GetMapping("/boats/{id}")
