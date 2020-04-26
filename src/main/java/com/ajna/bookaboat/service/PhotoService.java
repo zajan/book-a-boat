@@ -59,8 +59,8 @@ public class PhotoService {
     }
 
 
-    public void save(Photo photo){
-        photoRepository.save(photo);
+    public Photo save(Photo photo){
+        return photoRepository.save(photo);
     }
 
     public void deleteById(int id){

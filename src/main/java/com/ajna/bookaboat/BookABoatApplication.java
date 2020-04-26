@@ -12,8 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.annotation.PostConstruct;
+import javax.persistence.EntityNotFoundException;
+import javax.swing.text.html.parser.Entity;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -59,22 +63,26 @@ public class BookABoatApplication {
 
     private Role addSampleRole(String roleName) {
 
-        Role role = roleService.findByName(roleName);
-
-        if (role == null) {
+        Role role;
+        try{
+            role = roleService.findByName(roleName);
+        } catch (EntityNotFoundException e){
             role = new Role();
             role.setName(roleName);
             roleService.save(role);
-
             role = roleService.findByName(roleName);
         }
+
+
         return role;
     }
 
     private User addSampleUser(String username, String password, ArrayList<Role> roles) {
-        User user = userService.findByUsername(username);
+        User user;
 
-        if (user == null) {
+        try {
+            user = userService.findByUsername(username);
+        } catch (EntityNotFoundException e){
             user = new User();
             user.setUsername(username);
             user.setPassword(password);
@@ -82,12 +90,15 @@ public class BookABoatApplication {
             userService.save(user);
             user = userService.findByUsername(username);
         }
+
         return user;
     }
 
     private BoatType addSampleBoatType(String boatTypeName) {
-        BoatType boatType = boatTypeService.findByName(boatTypeName);
-        if (boatType == null) {
+        BoatType boatType;
+        try{
+            boatType = boatTypeService.findByName(boatTypeName);
+        } catch (EntityNotFoundException e){
             boatType = new BoatType();
             boatType.setName(boatTypeName);
             boatTypeService.save(boatType);
@@ -97,16 +108,24 @@ public class BookABoatApplication {
     }
 
     private Boat addSampleBoat(String name, BoatType boatType){
-        Boat boat = boatService.findByName(name);
-        if(boat == null){
+        Boat boat;
+        try{
+            boat = boatService.findByName(name);
+        } catch (EntityNotFoundException e){
             boat = new Boat();
             boat.setName(name);
             boat.setBoatType(boatType);
             boatService.save(boat);
             boat = boatService.findByName(name);
         }
+        
         return boat;
 
+    }
+
+    @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
 }

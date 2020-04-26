@@ -13,6 +13,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -69,13 +71,15 @@ public class BoatService {
         return savedBoat;
     }
 
-    public void addPhotos(int boatId, MultipartFile[] photos) {
+    public List<Photo> addPhotos(int boatId, MultipartFile[] photos) {
+        List<Photo> savedPhotos = new ArrayList<>();
         for (MultipartFile photo : photos) {
-            addPhoto(boatId, photo, false);
+            savedPhotos.add(addPhoto(boatId, photo, false));
         }
+        return savedPhotos.isEmpty() ? null : savedPhotos;
     }
 
-    public void addPhoto(int boatId, MultipartFile photoFile, boolean isDefault) {
+    public Photo addPhoto(int boatId, MultipartFile photoFile, boolean isDefault) {
 
         if (findById(boatId) == null) {
             throw new EntityNotFoundException("Boat with given id not found.");
@@ -83,7 +87,7 @@ public class BoatService {
 
         String imageName = fileUploadService.store(photoFile);
         Photo photo = new Photo(imageName, boatId, isDefault);
-        photoService.save(photo);
+        return photoService.save(photo);
     }
 
     public void setPhotoAsDefault(int boatId, String photoName) {

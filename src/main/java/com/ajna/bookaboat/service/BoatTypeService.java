@@ -1,6 +1,7 @@
 package com.ajna.bookaboat.service;
 
 
+import com.ajna.bookaboat.entity.Boat;
 import com.ajna.bookaboat.entity.BoatType;
 import com.ajna.bookaboat.respository.BoatTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +37,8 @@ public class BoatTypeService {
         return optBoatType.get();
     }
 
-    public void save(BoatType boatType){
-        boatTypeRepository.save(boatType);
+    public BoatType save(BoatType boatType){
+        return boatTypeRepository.save(boatType);
     }
 
     public void deleteById(int id){
