@@ -1,4 +1,4 @@
-package com.ajna.bookaboat.dto;
+package com.ajna.bookaboat.service;
 
 import com.ajna.bookaboat.entity.Boat;
 import org.junit.platform.commons.util.StringUtils;

@@ -1,6 +1,5 @@
 package com.ajna.bookaboat.service;
 
-import com.ajna.bookaboat.dto.BoatFilter;
 import com.ajna.bookaboat.entity.Boat;
 import com.ajna.bookaboat.entity.Photo;
 import com.ajna.bookaboat.respository.BoatRepository;

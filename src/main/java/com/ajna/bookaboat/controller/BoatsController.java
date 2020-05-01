@@ -1,17 +1,15 @@
 package com.ajna.bookaboat.controller;
 
-import com.ajna.bookaboat.dto.BoatFilter;
+import com.ajna.bookaboat.service.BoatFilter;
 import com.ajna.bookaboat.entity.Boat;
 import com.ajna.bookaboat.entity.BoatType;
 import com.ajna.bookaboat.entity.Photo;
 import com.ajna.bookaboat.service.BoatService;
 import com.ajna.bookaboat.service.BoatTypeService;
-import com.ajna.bookaboat.service.PhotoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -31,7 +29,7 @@ public class BoatsController {
     BoatTypeService boatTypeService;
 
 
-    @GetMapping("/")
+    @GetMapping("")
     public Iterable<Boat> getAllBoats(BoatFilter boatFilter, Pageable pageable){
         return boatService.findAll(boatFilter, pageable);
     }
@@ -42,7 +40,7 @@ public class BoatsController {
     }
 
 
-    @PostMapping("/")
+    @PostMapping("")
     public Boat save(@RequestPart @Valid Boat boat, @RequestPart MultipartFile[] photos){
         return boatService.save(boat, photos);
     }

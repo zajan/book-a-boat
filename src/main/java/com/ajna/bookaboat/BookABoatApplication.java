@@ -1,13 +1,7 @@
 package com.ajna.bookaboat;
 
-import com.ajna.bookaboat.entity.Boat;
-import com.ajna.bookaboat.entity.BoatType;
-import com.ajna.bookaboat.entity.Role;
-import com.ajna.bookaboat.entity.User;
-import com.ajna.bookaboat.service.BoatService;
-import com.ajna.bookaboat.service.BoatTypeService;
-import com.ajna.bookaboat.service.RoleService;
-import com.ajna.bookaboat.service.UserService;
+import com.ajna.bookaboat.entity.*;
+import com.ajna.bookaboat.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -18,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityNotFoundException;
 import javax.swing.text.html.parser.Entity;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -36,6 +31,9 @@ public class BookABoatApplication {
 
     @Autowired
     private BoatService boatService;
+
+    @Autowired
+    BookingService bookingService;
 
     public static void main(String[] args) {
         SpringApplication.run(BookABoatApplication.class, args);
@@ -59,6 +57,8 @@ public class BookABoatApplication {
 
         Boat mint = addSampleBoat("Mint", yacht);
         Boat chilli = addSampleBoat("Chilli", motorboat);
+
+//        Booking booking = addSampleBooking(user, mint);
     }
 
     private Role addSampleRole(String roleName) {
@@ -118,9 +118,17 @@ public class BookABoatApplication {
             boatService.save(boat);
             boat = boatService.findByName(name);
         }
-        
-        return boat;
 
+        return boat;
+    }
+
+    private Booking addSampleBooking(User user, Boat boat){
+        Booking booking =  new Booking();
+        booking.setUser(user);
+        booking.setBoat(boat);
+        booking.setDateStart(LocalDate.of(2021, 05, 1));
+        booking.setDateEnd(LocalDate.of(2021, 05, 6));
+        return bookingService.save(booking);
     }
 
     @Bean

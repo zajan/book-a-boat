@@ -1,6 +1,10 @@
 package com.ajna.bookaboat.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Entity
@@ -10,18 +14,22 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "boat_id", nullable = false)
     private Boat boat;
 
     @Column(name = "date_start")
+    @NotNull
+    @JsonFormat(pattern="yyyy-MM-dd")
     private LocalDate dateStart;
 
     @Column(name = "date_end")
+    @NotNull
+    @JsonFormat(pattern="yyyy-MM-dd")
     private LocalDate dateEnd;
 
     public Booking() {
@@ -73,5 +81,14 @@ public class Booking {
 
     public void setDateEnd(LocalDate dateEnd) {
         this.dateEnd = dateEnd;
+    }
+
+    @Override
+    public String toString() {
+        return "\nBooking{" +
+                "id=" + id +
+                ", dateStart=" + dateStart +
+                ", dateEnd=" + dateEnd +
+                '}';
     }
 }

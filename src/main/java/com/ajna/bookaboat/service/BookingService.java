@@ -2,8 +2,10 @@ package com.ajna.bookaboat.service;
 
 
 import com.ajna.bookaboat.entity.Booking;
+import com.ajna.bookaboat.exception.BookingException;
 import com.ajna.bookaboat.respository.BookingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -16,9 +18,12 @@ public class BookingService {
     @Autowired
     BookingRepository bookingRepository;
 
+    public List<Booking> findAll(Specification<Booking> specification) {
+        return bookingRepository.findAll(specification);
+    }
 
-    public List<Booking> findAll() {
-        return bookingRepository.findAll();
+    public void deletaAll() {
+        bookingRepository.deleteAll();
     }
 
     public Booking findById(int id) {
@@ -29,9 +34,25 @@ public class BookingService {
         return optBooking.get();
     }
 
-    public void save(Booking booking) {
-        // TODO: check if available
-        bookingRepository.save(booking);
+    public Booking save(Booking booking) {
+
+        if (!BookingValidator.isCorrect(booking)) {
+            throw new BookingException("Booking end date is before start date.");
+        }
+
+        if (!BookingValidator.isInFuture(booking)) {
+            throw new BookingException("The booking start date must be in future. Start date: " + booking.getDateStart());
+        }
+
+        Specification<Booking> spec = BookingValidator.bookingsAtThisTime(booking);
+
+        List<Booking> bookingsAtThisTime = findAll(spec);
+        if (!bookingsAtThisTime.isEmpty()) {
+            throw new BookingException("Boat with id = " + booking.getBoat().getId() + " is not available at this time: "
+                    + booking.getDateStart() + " - " + booking.getDateEnd());
+        }
+
+        return bookingRepository.save(booking);
     }
 
     public void deleteById(int id) {
