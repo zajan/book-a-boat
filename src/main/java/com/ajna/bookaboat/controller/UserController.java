@@ -1,7 +1,9 @@
 package com.ajna.bookaboat.controller;
 
+import com.ajna.bookaboat.entity.Booking;
 import com.ajna.bookaboat.entity.Role;
 import com.ajna.bookaboat.entity.User;
+import com.ajna.bookaboat.service.BookingService;
 import com.ajna.bookaboat.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -21,9 +23,17 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("sign-up")
+    @Autowired
+    private BookingService bookingService;
+
+    @PostMapping("/sign-up")
     public User signUp(@RequestBody User user){
         return userService.save(user);
+    }
+
+    @GetMapping("/me/bookings")
+    public List<Booking> getMyBookings(Authentication auth){
+        return bookingService.findForUser(auth.getPrincipal().toString());
     }
 
     @GetMapping("/users")

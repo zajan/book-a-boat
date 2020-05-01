@@ -2,6 +2,7 @@ package com.ajna.bookaboat.service;
 
 
 import com.ajna.bookaboat.entity.Booking;
+import com.ajna.bookaboat.entity.User;
 import com.ajna.bookaboat.exception.BookingException;
 import com.ajna.bookaboat.respository.BookingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,10 @@ public class BookingService {
 
     public List<Booking> findAll(Specification<Booking> specification) {
         return bookingRepository.findAll(specification);
+    }
+
+    public List<Booking> findForUser(String username){
+        return bookingRepository.findByUser_Username(username);
     }
 
     public void deletaAll() {
