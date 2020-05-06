@@ -23,7 +23,19 @@ public class BoatTypesController {
 
     @PostMapping("")
     public BoatType saveBoatType(@RequestBody BoatType boatType){
+        boatType.setId(0);
         return boatTypeService.save(boatType);
+    }
+
+    @PutMapping("/{id}")
+    public BoatType updateBoatType(@PathVariable int id, @RequestBody BoatType boatType){
+        boatType.setId(id);
+        return boatTypeService.save(boatType);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteBoatTypeById(@PathVariable int id){
+        boatTypeService.deleteById(id);
     }
 
 }

@@ -44,7 +44,18 @@ public class BoatsController {
 
     @PostMapping("")
     public Boat save(@RequestPart @Valid Boat boat, @RequestPart MultipartFile[] photos){
+        boat.setId(0);
         return boatService.save(boat, photos);
+    }
+
+    @PutMapping("")
+    public Boat updateBoat(@RequestPart @Valid Boat boat, @RequestPart MultipartFile[] photos){
+        return boatService.save(boat, photos);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteBoatById(@PathVariable int id){
+        boatService.deleteById(id);
     }
 
 

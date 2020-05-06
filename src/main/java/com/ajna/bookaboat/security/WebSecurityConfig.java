@@ -33,8 +33,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
         http.cors().and().csrf().disable().authorizeRequests()
                 .antMatchers(HttpMethod.POST, SIGN_UP_URL).permitAll()
                 .antMatchers(HttpMethod.GET, "/me").authenticated()
+                .antMatchers(HttpMethod.PUT, "/me").authenticated()
                 .antMatchers(HttpMethod.GET, "/users").hasRole("ADMIN")
                 .antMatchers(HttpMethod.POST, "/set-admin").hasRole("ADMIN")
+                .antMatchers(HttpMethod.DELETE, "/users").hasRole("ADMIN")
 
                 .antMatchers(HttpMethod.GET, "/boats/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/boats/**").hasRole("ADMIN")
@@ -45,6 +47,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                 .antMatchers(HttpMethod.DELETE, "/photos/**").hasRole("ADMIN")
 
                 .antMatchers(HttpMethod.GET, "/bookings/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.DELETE, "/bookings/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.POST, "/bookings/**").hasRole("USER")
 
                 .and()
