@@ -58,6 +58,11 @@ public class PhotoService {
         return optPhoto.get();
     }
 
+    public boolean photoExists(int boatId, String photoName){
+        Optional<Photo> optPhoto = photoRepository.findByNameAndBoatId(photoName, boatId);
+        return optPhoto.isPresent();
+    }
+
 
     public Photo save(Photo photo){
         return photoRepository.save(photo);

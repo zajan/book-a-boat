@@ -10,5 +10,5 @@ public interface PhotoRepository extends JpaRepository<Photo, Integer> {
     Optional<Photo> findByName(@Param("name")String name);
     int deleteByName(@Param("name")String name);
     Optional<Photo> findByBoatIdAndIsDefault(@Param("boat_id")int boatId, @Param("is_default") boolean isDefault);
-
+    Optional<Photo> findByNameAndBoatId(@Param("name") String name, @Param("boat_id") int boatId);
 }

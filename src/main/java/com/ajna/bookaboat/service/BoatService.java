@@ -90,7 +90,18 @@ public class BoatService {
     }
 
     public void setPhotoAsDefault(int boatId, String photoName) {
-        Photo oldDefaultPhoto = photoService.findDefaultForBoat(boatId);
+
+        if(!photoService.photoExists(boatId, photoName)){
+            throw new EntityNotFoundException("Couldn't find photo with name: " + photoName
+                                    + " of boat with id: " + boatId);
+        }
+
+
+        Photo oldDefaultPhoto = null;
+        try {
+            oldDefaultPhoto = photoService.findDefaultForBoat(boatId);
+        } catch (EntityNotFoundException e){}
+
         if (oldDefaultPhoto != null) {
             oldDefaultPhoto.setDefault(false);
         }
