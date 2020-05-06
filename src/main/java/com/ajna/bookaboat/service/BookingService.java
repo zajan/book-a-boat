@@ -27,6 +27,10 @@ public class BookingService {
         return bookingRepository.findByUser_Username(username);
     }
 
+    public List<Booking> findForBoat(int boatId){
+        return bookingRepository.findByBoat_Id(boatId);
+    }
+
     public void deletaAll() {
         bookingRepository.deleteAll();
     }

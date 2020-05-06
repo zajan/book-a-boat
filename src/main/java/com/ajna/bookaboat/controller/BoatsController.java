@@ -1,11 +1,13 @@
 package com.ajna.bookaboat.controller;
 
+import com.ajna.bookaboat.entity.Booking;
 import com.ajna.bookaboat.service.BoatFilter;
 import com.ajna.bookaboat.entity.Boat;
 import com.ajna.bookaboat.entity.BoatType;
 import com.ajna.bookaboat.entity.Photo;
 import com.ajna.bookaboat.service.BoatService;
 import com.ajna.bookaboat.service.BoatTypeService;
+import com.ajna.bookaboat.service.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Pageable;
@@ -23,10 +25,10 @@ import java.util.List;
 public class BoatsController {
 
     @Autowired
-    BoatService boatService;
+    private BoatService boatService;
 
     @Autowired
-    BoatTypeService boatTypeService;
+    private BookingService bookingService;
 
 
     @GetMapping("")
@@ -46,9 +48,14 @@ public class BoatsController {
     }
 
 
-    @PostMapping("/boats/{boat_id}/photos")
+    @PostMapping("/{boat_id}/photos")
     public List<Photo> addPhotos(@PathVariable int boat_id, @RequestPart MultipartFile[] photos){
         return boatService.addPhotos(boat_id, photos);
+    }
+
+    @GetMapping("/{boat_id}/bookings")
+    public List<Booking> getBookings(@PathVariable int boat_id){
+        return bookingService.findForBoat(boat_id);
     }
 
     @GetMapping("/{id}/default-photo")
@@ -60,16 +67,4 @@ public class BoatsController {
     public void setDefaultPhoto(@PathVariable int id,@PathVariable String image_name){
         boatService.setPhotoAsDefault(id, image_name);
     }
-
-
-    @GetMapping("/boat-types")
-    public List<BoatType> getBoatTypes(){
-        return boatTypeService.findAll();
-    }
-
-    @PostMapping("/boat-types")
-    public BoatType saveBoatType(@RequestBody BoatType boatType){
-        return boatTypeService.save(boatType);
-    }
-
 }
