@@ -1,7 +1,6 @@
 package com.ajna.bookaboat.service;
 
 import com.ajna.bookaboat.entity.Booking;
-import com.ajna.bookaboat.exception.BookingException;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.lang.Nullable;
 

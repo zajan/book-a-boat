@@ -16,11 +16,13 @@ public class ExceptionControllerAdvice {
 
     @ExceptionHandler(EntityNotFoundException.class)
     public void handleEntityNotFound(HttpServletResponse response) throws IOException{
+        response.setHeader("Content-Type", "application/json");
         response.sendError(HttpStatus.NOT_FOUND.value());
     }
 
     @ExceptionHandler(BookingException.class)
     public void handleBookingException(HttpServletResponse response) throws IOException{
+        response.setHeader("Content-Type", "application/json");
         response.sendError(HttpStatus.BAD_REQUEST.value());
     }
 }

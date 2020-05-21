@@ -1,7 +1,6 @@
 package com.ajna.bookaboat.service;
 
 
-import com.ajna.bookaboat.entity.Boat;
 import com.ajna.bookaboat.entity.BoatType;
 import com.ajna.bookaboat.respository.BoatTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;

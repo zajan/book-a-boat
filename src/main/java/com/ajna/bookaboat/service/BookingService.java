@@ -2,7 +2,6 @@ package com.ajna.bookaboat.service;
 
 
 import com.ajna.bookaboat.entity.Booking;
-import com.ajna.bookaboat.entity.User;
 import com.ajna.bookaboat.exception.BookingException;
 import com.ajna.bookaboat.respository.BookingRepository;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -3,7 +3,6 @@ package com.ajna.bookaboat.controller;
 import com.ajna.bookaboat.entity.Booking;
 import com.ajna.bookaboat.service.BoatFilter;
 import com.ajna.bookaboat.entity.Boat;
-import com.ajna.bookaboat.entity.BoatType;
 import com.ajna.bookaboat.entity.Photo;
 import com.ajna.bookaboat.service.BoatService;
 import com.ajna.bookaboat.service.BoatTypeService;
