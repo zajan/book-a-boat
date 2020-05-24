@@ -1,10 +1,11 @@
-![alt text](img/logo.png)
+![Book A Boat](img/logo.png)
 
-**Backend API**
+**REST API**
 
-full api documentation available in [wiki](https://github.com/zajan/book-a-boat)
+full api documentation available in [wiki](https://github.com/zajan/book-a-boat/wiki)
 
-# Description
+
+# 1. Description
 
 The purpose of the application is to provide a booking system for a
 boat renting company.  The main task of the app is to eneble users to
@@ -12,12 +13,14 @@ browse available boats and make reservations on dates that interest
 them. Application has also admin panel which allows to add and edit
 boats.
 
-# Database diagram
+This backend version provides only the REST API. There is no UI.
 
-![alt text](img/db.png)
+# 2. Database diagram
+
+![db diagram](img/db.png)
 
 
-# Technology stack
+# 3. Technology stack
 
 • Spring Boot
 
@@ -31,9 +34,9 @@ boats.
 
 • JUnit, Mockito
 
-# How to run
+# 4. How to run
 
-## Run with command line
+## 4.1. Run with command line
 
 Navigate to the root directory of the project and use following commands.
 
@@ -46,7 +49,7 @@ on mac:
 ./mvnw spring-boot:run
 ```
 
-## Database configuration
+## 4.2. Database configuration
 
 By default, book-a-boat app uses h2 database.  
 
@@ -83,7 +86,7 @@ spring.datasource.password=root
 photostorage.path=D:/bookaboat/img/boats_images/
 ```
 
-# Authentication
+# 5. Authentication
 
 This api uses JWT (JSON Web Token) Authentication.
 
@@ -161,7 +164,7 @@ curl -X POST 'http://localhost:8080/set-admin/{user_id} \
 ```
 
 
-# Errors
+# 6. Errors
 
 Error structure:
 
@@ -174,3 +177,5 @@ Error structure:
     "path": "/boats"
 }
 ```
+
+**for endpoints documentation, see [wiki](https://github.com/zajan/book-a-boat/wiki)**
