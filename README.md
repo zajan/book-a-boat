@@ -17,22 +17,22 @@ This backend version provides only the REST API. There is no UI.
 
 # 2. Database diagram
 
-![db diagram](img/db.png)
+![db diagram](img/database.png)
 
 
 # 3. Technology stack
 
-â€¢ Spring Boot
+• Spring Boot
 
-â€¢ Spring Security
+• Spring Security
 
-â€¢ Spring Data JPA
+• Spring Data JPA
 
-â€¢ Hibernate
+• Hibernate
 
-â€¢ MySQL / H2
+• MySQL / H2
 
-â€¢ JUnit, Mockito
+• JUnit, Mockito
 
 # 4. How to run
 
