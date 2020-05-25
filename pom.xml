@@ -34,7 +34,7 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
-		<!-- mysql db
+
 
 		<dependency>
 			<groupId>mysql</groupId>
@@ -47,15 +47,15 @@
 			<artifactId>c3p0</artifactId>
 			<version>0.9.5.4</version>
 		</dependency>
-		-->
 
-		<!-- h2 db -->
+
+<!--
 
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 		</dependency>
-
+		-->
 
 		<!-- commons io -->
 
