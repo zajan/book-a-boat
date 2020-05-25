@@ -64,13 +64,19 @@ To run app locally using persistent database, it is needed to change profile def
 # spring.datasource.url=jdbc:mysql://localhost:3306/boats?useSSL=false&serverTimezone=Europe/Berlin
 
 ```
-
+and this line:
+```
+spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.MySQL5InnoDBDialect
+```
 **Comment / remove this line:**
 ```
 # - h2 database -
 spring.datasource.url=jdbc:h2:mem:testdb;DB_CLOSE_ON_EXIT=FALSE
 ```
-
+and this line:
+```
+#spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.H2Dialect
+```
 **Provide correct username and password:**
 
 ```
@@ -83,10 +89,30 @@ spring.datasource.password=root
 
 ```
 # --- file path ---
-photostorage.path=D:/bookaboat/img/boats_images/
+photostorage.path=/Users/bea/Documents/boats_images
 ```
 
-**Uncomment mysql config in pom.xml**
+**Uncomment mysql config in pom.xml**:
+```
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.mchange</groupId>
+			<artifactId>c3p0</artifactId>
+			<version>0.9.5.4</version>
+		</dependency>
+```
+comment this out:
+```
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+		</dependency>
+```
 # 5. Authentication
 
 This api uses JWT (JSON Web Token) Authentication.
