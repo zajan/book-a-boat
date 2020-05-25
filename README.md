@@ -34,7 +34,7 @@ This backend version provides only the REST API. There is no UI.
 
 � JUnit, Mockito
 
-# 4. How to run
+# 4. Run project
 
 ## 4.1. Run with command line
 
@@ -89,7 +89,7 @@ spring.datasource.password=root
 
 ```
 # --- file path ---
-photostorage.path=/Users/bea/Documents/boats_images
+photostorage.path=/PATH_TO_IMAGES
 ```
 
 **Uncomment mysql config in pom.xml**:
@@ -187,7 +187,7 @@ Admin can assing "ROLE_ADMIN" to other user by using following endpoint.
 ```
 curl -X POST 'http://localhost:8080/set-admin/{user_id} \
 
--H 'Authorization: Bearer <generated token>' \
+-H 'Authorization: Bearer $GENERATED_TOKEN' \
 ```
 
 
@@ -204,5 +204,3 @@ Error structure:
     "path": "/boats"
 }
 ```
-
-**for endpoints documentation, see [wiki](https://github.com/zajan/book-a-boat/wiki)**
