@@ -22,17 +22,17 @@ This backend version provides only the REST API. There is no UI.
 
 # 3. Technology stack
 
-• Spring Boot
+ï¿½ Spring Boot
 
-• Spring Security
+ï¿½ Spring Security
 
-• Spring Data JPA
+ï¿½ Spring Data JPA
 
-• Hibernate
+ï¿½ Hibernate
 
-• MySQL / H2
+ï¿½ MySQL / H2
 
-• JUnit, Mockito
+ï¿½ JUnit, Mockito
 
 # 4. How to run
 
@@ -86,6 +86,7 @@ spring.datasource.password=root
 photostorage.path=D:/bookaboat/img/boats_images/
 ```
 
+**Uncomment mysql config in pom.xml**
 # 5. Authentication
 
 This api uses JWT (JSON Web Token) Authentication.
