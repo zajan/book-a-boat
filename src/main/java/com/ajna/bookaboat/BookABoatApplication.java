@@ -1,6 +1,7 @@
 package com.ajna.bookaboat;
 
 import com.ajna.bookaboat.entity.*;
+import com.ajna.bookaboat.exception.BookingException;
 import com.ajna.bookaboat.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -125,12 +126,13 @@ public class BookABoatApplication {
         Booking booking =  new Booking();
         booking.setUser(user);
         booking.setBoat(boat);
-        // TODO: currently this brakes application as on every restart we try to rebook the same boat
-        //  which is forbidden and cause exception
-        // so we should verify if boat is avieable yet
         booking.setDateStart(LocalDate.of(2021, 05, 1));
         booking.setDateEnd(LocalDate.of(2021, 05, 6));
-        return bookingService.save(booking);
+        try{
+            return bookingService.save(booking);
+        } catch (BookingException exception){
+        }
+        return null;
     }
 
     @Bean
