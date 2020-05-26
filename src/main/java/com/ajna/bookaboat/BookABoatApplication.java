@@ -43,7 +43,7 @@ public class BookABoatApplication {
     public void init(){
         addSampleData();
     }
-
+//TODO: this methods should not be in the main application class
     public void addSampleData() {
         Role roleAdmin = addSampleRole("ROLE_ADMIN");
         Role roleUser = addSampleRole("ROLE_USER");
@@ -125,6 +125,9 @@ public class BookABoatApplication {
         Booking booking =  new Booking();
         booking.setUser(user);
         booking.setBoat(boat);
+        // TODO: currently this brakes application as on every restart we try to rebook the same boat
+        //  which is forbidden and cause exception
+        // so we should verify if boat is avieable yet
         booking.setDateStart(LocalDate.of(2021, 05, 1));
         booking.setDateEnd(LocalDate.of(2021, 05, 6));
         return bookingService.save(booking);

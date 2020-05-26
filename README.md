@@ -22,19 +22,19 @@ This backend version provides only the REST API. There is no UI.
 
 # 3. Technology stack
 
-• Spring Boot
+ï¿½ Spring Boot
 
-• Spring Security
+ï¿½ Spring Security
 
-• Spring Data JPA
+ï¿½ Spring Data JPA
 
-• Hibernate
+ï¿½ Hibernate
 
-• MySQL / H2
+ï¿½ MySQL / H2
 
-• JUnit, Mockito
+ï¿½ JUnit, Mockito
 
-# 4. How to run
+# 4. Run project
 
 ## 4.1. Run with command line
 
@@ -64,13 +64,19 @@ To run app locally using persistent database, it is needed to change profile def
 # spring.datasource.url=jdbc:mysql://localhost:3306/boats?useSSL=false&serverTimezone=Europe/Berlin
 
 ```
-
+and this line:
+```
+spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.MySQL5InnoDBDialect
+```
 **Comment / remove this line:**
 ```
 # - h2 database -
 spring.datasource.url=jdbc:h2:mem:testdb;DB_CLOSE_ON_EXIT=FALSE
 ```
-
+and this line:
+```
+#spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.H2Dialect
+```
 **Provide correct username and password:**
 
 ```
@@ -83,9 +89,30 @@ spring.datasource.password=root
 
 ```
 # --- file path ---
-photostorage.path=D:/bookaboat/img/boats_images/
+photostorage.path=/PATH_TO_IMAGES
 ```
 
+**Uncomment mysql config in pom.xml**:
+```
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.mchange</groupId>
+			<artifactId>c3p0</artifactId>
+			<version>0.9.5.4</version>
+		</dependency>
+```
+comment this out:
+```
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+		</dependency>
+```
 # 5. Authentication
 
 This api uses JWT (JSON Web Token) Authentication.
@@ -160,7 +187,7 @@ Admin can assing "ROLE_ADMIN" to other user by using following endpoint.
 ```
 curl -X POST 'http://localhost:8080/set-admin/{user_id} \
 
--H 'Authorization: Bearer <generated token>' \
+-H 'Authorization: Bearer $GENERATED_TOKEN' \
 ```
 
 
@@ -177,5 +204,3 @@ Error structure:
     "path": "/boats"
 }
 ```
-
-**for endpoints documentation, see [wiki](https://github.com/zajan/book-a-boat/wiki)**
