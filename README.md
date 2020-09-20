@@ -2,13 +2,25 @@
 
 **REST API**
 
-full api documentation available in [wiki](https://github.com/zajan/book-a-boat/wiki)
+FULL API DOCUMENTATION available in [wiki](https://github.com/zajan/book-a-boat/wiki)
+
+[1. Description](https://github.com/zajan/book-a-boat#1-description)
+
+[2. Database diagram](https://github.com/zajan/book-a-boat#2-database-diagram)
+
+[3. Technology stack](https://github.com/zajan/book-a-boat#3-technology-stack)
+
+[4. Run project](https://github.com/zajan/book-a-boat#4-run-project)
+
+[5. Authentication](https://github.com/zajan/book-a-boat#5-authentication)
+
+[6. Errors](https://github.com/zajan/book-a-boat#6-errors)
 
 
 # 1. Description
 
 The purpose of the application is to provide a booking system for a
-boat renting company.  The main task of the app is to eneble users to
+boat renting company.  The main task of the app is to enable users to
 browse available boats and make reservations on dates that interest
 them. Application has also admin panel which allows to add and edit
 boats.
@@ -22,17 +34,17 @@ This backend version provides only the REST API. There is no UI.
 
 # 3. Technology stack
 
-� Spring Boot
+- Spring Boot
 
-� Spring Security
+- Spring Security
 
-� Spring Data JPA
+- Spring Data JPA
 
-� Hibernate
+- Hibernate
 
-� MySQL / H2
+- MySQL / H2
 
-� JUnit, Mockito
+- JUnit, Mockito
 
 # 4. Run project
 
